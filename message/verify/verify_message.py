@@ -7,7 +7,7 @@ def verify_signature(public_key_pem, signed_message_file):
     with open(public_key_pem, 'rb') as pub_file:
         public_key = load_pem_public_key(pub_file.read())
 
-    with open(signed_message_file, 'r') as file:
+    with open(signed_message_file, 'r', encoding="utf-8") as file:
         signed_message = file.read()
 
     message_start = signed_message.find("-----BEGIN SIGNED MESSAGE-----") + len("-----BEGIN SIGNED MESSAGE-----")
@@ -28,11 +28,14 @@ def verify_signature(public_key_pem, signed_message_file):
         public_key.verify(
             signature,
             message.encode('utf-8'),
-            padding.PKCS1v15(),
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=20
+            ),
             hashes.SHA256()
         )
         print("Message is genuine")
     except InvalidSignature:
         print("VALIDATION FAILED")
 
-verify_signature("public_key.pem", "signed_message.txt")
+verify_signature("rsa_public_key.pem", "signed_message.txt")

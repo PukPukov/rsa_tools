@@ -24,7 +24,7 @@ else:
         message.encode("utf-8"),
         padding.PSS(
             mgf=padding.MGF1(hashes.SHA256()),
-            salt_length=padding.PSS.MAX_LENGTH
+            salt_length=20
         ),
         hashes.SHA256()
     )
