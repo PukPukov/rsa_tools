@@ -25,6 +25,8 @@ Dead simple RSA-based message genuinity verification tool.
 - Install Python
 - Install `cryptography` lib (`pip install cryptography`)
 
+## Additional information
+
 All inputs and outputs are files in the same directory as python file. You just provide them and run python file. All dynamic files already excluded in gitignore.
 
 Why not GnuPG or OpenSSL? They are not that simple, and gnupg also is using its own no-one-asked-for key format.  
