@@ -20,6 +20,7 @@ def verify_signature(public_key_pem, signed_message_file):
 
     message = signed_message[message_start:message_end].strip()
     signature = signed_message[signature_start:signature_end].strip()
+    signature = ''.join(signature.splitlines())
 
     from base64 import b64decode
     signature = b64decode(signature)

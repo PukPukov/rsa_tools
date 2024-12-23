@@ -31,12 +31,17 @@ else:
 
     signature_base64 = base64.b64encode(signature).decode("utf-8")
 
+    def split_into_lines(data, line_length=64):
+        return '\n'.join([data[i:i+line_length] for i in range(0, len(data), line_length)])
+
+    signature_pem = split_into_lines(signature_base64)
+
     with open(output_file, "w", encoding="utf-8") as f:
         f.write("-----BEGIN SIGNED MESSAGE-----\n")
         f.write(message + "\n")
         f.write("-----END SIGNED MESSAGE-----\n")
         f.write("-----BEGIN SIGNATURE-----\n")
-        f.write(signature_base64 + "\n")
+        f.write(signature_pem + "\n")
         f.write("-----END SIGNATURE-----\n")
 
     print(f"Message and signature saved to {output_file}")
